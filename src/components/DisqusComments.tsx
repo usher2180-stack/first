@@ -2,29 +2,31 @@ import { useEffect } from "react";
 
 export default function DisqusComments() {
   useEffect(() => {
-    const disqus_config = function (this: any) {
+    const config = function (this: any) {
       this.page.url = window.location.href;
       this.page.identifier = window.location.pathname;
     };
 
-    // Check if Disqus is already loaded to avoid duplicates
-    if (document.getElementById("disqus-script")) {
-      // @ts-ignore
-      if (window.DISQUS) {
-        // @ts-ignore
-        window.DISQUS.reset({
-          reload: true,
-          config: disqus_config
-        });
-      }
+    // Set global config
+    (window as any).disqus_config = config;
+
+    if ((window as any).DISQUS) {
+      (window as any).DISQUS.reset({
+        reload: true,
+        config: config,
+      });
       return;
     }
+
+    // Check if script already exists but DISQUS is not yet on window
+    if (document.getElementById("disqus-script")) return;
 
     const d = document;
     const s = d.createElement("script");
     s.id = "disqus-script";
     s.src = "https://doosung.disqus.com/embed.js";
     s.setAttribute("data-timestamp", (+new Date()).toString());
+    s.async = true;
     (d.head || d.body).appendChild(s);
   }, []);
 
