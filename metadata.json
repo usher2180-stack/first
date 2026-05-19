@@ -1,0 +1,6 @@
+{
+  "name": "디에스엘 컴퍼니",
+  "description": "Professional business collaboration and inquiry management platform.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
